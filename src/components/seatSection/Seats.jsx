@@ -10,6 +10,7 @@ export default function Seats() {
 
     const { showtimeId } = useParams();
     const [seatsList, setSeatsList] = useState(null);
+    const [book, setBook] = useState([]);
 
     useEffect(() => {
         axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${showtimeId}/seats`)
@@ -27,6 +28,7 @@ export default function Seats() {
         )
     }
 
+    console.log(book);
     return (
         <Content>
             <Details>
@@ -35,7 +37,7 @@ export default function Seats() {
                 </Label>
                 <SeatDisplay>
                     <SeatContainer>
-                        {seatsList.seats.map(({ id, name, isAvailable }) => <Seat key={id} seatId={id} seat={name} available={isAvailable} />)}
+                        {seatsList.seats.map(({ id, name, isAvailable }) => <Seat key={id} seatId={id} seat={name} available={isAvailable} book={book} setBook={setBook} />)}
                     </SeatContainer>
                 </SeatDisplay>
                 <CustomerData>
