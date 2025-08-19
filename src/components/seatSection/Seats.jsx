@@ -11,6 +11,8 @@ export default function Seats() {
     const { showtimeId } = useParams();
     const [seatsList, setSeatsList] = useState(null);
     const [book, setBook] = useState([]);
+    const [name, setName] = useState('');
+    const [cpf, setCpf] = useState('');
 
     useEffect(() => {
         axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${showtimeId}/seats`)
@@ -28,6 +30,24 @@ export default function Seats() {
         )
     }
 
+    function Teste(event) {
+        event.preventDefault()
+
+        if (book.length === 0) {
+            alert("Selecione os assentos desejados!");
+        } else {
+            const body = {
+                ids: book,
+                name,
+                cpf
+            }
+
+            console.log(body);
+
+            return body;
+        }
+    }
+
     console.log(book);
     return (
         <Content>
@@ -40,17 +60,20 @@ export default function Seats() {
                         {seatsList.seats.map(({ id, name, isAvailable }) => <Seat key={id} seatId={id} seat={name} available={isAvailable} book={book} setBook={setBook} />)}
                     </SeatContainer>
                 </SeatDisplay>
-                <CustomerData>
-                    <hr/>
+                <CustomerData onSubmit={Teste}>
+                    <hr />
                     <DataInput>
-                    <p>Nome do comprador(a)</p>
-                    <input type="text" name="" id="" />
-                    <p>CPF do comprador(a)</p>
-                    <input type="text" name="" id="" />
+
+                        <label htmlFor='nome'>Nome do comprador(a)</label>
+                        <input required id='nome' name='nome' type="text" />
+
+                        <label htmlFor='cpf'>CPF do comprador(a)</label>
+                        <input required id='cpf' name='cpf' type="text" pattern='\d*' minLength={11} maxLength={11} onChange={e => setCpf(e.target.value)} />
+
                     </DataInput>
-                    <BookSeats to='/finalizado'>Reservar assento(s)</BookSeats>
+                    <BookSeats type="submit" to='/finalizado'>Reservar assento(s)</BookSeats>
                 </CustomerData>
-                
+
             </Details>
         </Content>
     )
@@ -73,7 +96,7 @@ const SeatContainer = styled.div`
     row-gap: 12px;
     column-gap: 10px; 
 `
-const CustomerData = styled.div`
+const CustomerData = styled.form`
     width: 90%;
     display: flex;
     flex-direction:column;
@@ -90,7 +113,7 @@ const DataInput = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    p{
+    label{
         color: #FFFFFF;
         margin-bottom: 4px;
     }
@@ -101,7 +124,7 @@ const DataInput = styled.div`
     }
 `
 
-const BookSeats = styled(Link)`
+const BookSeats = styled.button`
     margin-top: 4px;
     display: flex;
     height: 42px;
