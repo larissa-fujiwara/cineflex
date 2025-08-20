@@ -49,7 +49,6 @@ export default function Seats({ setBuyerData, setSeatsInfo }) {
                 .catch((erro) => console.log(erro.response.data))
 
             let newCpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-            console.log(newCpf);
 
             setBuyerData({name, cpf:newCpf});
             setSeatsInfo(seatLabel.sort((a,b) => a - b) );
