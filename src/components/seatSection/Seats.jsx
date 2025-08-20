@@ -65,10 +65,24 @@ export default function Seats() {
                     <DataInput>
 
                         <label htmlFor='nome'>Nome do comprador(a)</label>
-                        <input required id='nome' name='nome' type="text" />
+                        <Input 
+                        required 
+                        id='nome' 
+                        name='nome' 
+                        type="text"
+                        placeholder="Digite o nome completo" />
 
                         <label htmlFor='cpf'>CPF do comprador(a)</label>
-                        <input required id='cpf' name='cpf' type="text" pattern='\d*' minLength={11} maxLength={11} onChange={e => setCpf(e.target.value)} />
+                        <Input
+                            required
+                            id='cpf'
+                            name='cpf'
+                            type="text"
+                            placeholder="Digite o CPF"
+                            pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}"
+                            onChange={e => setCpf(e.target.value.replace(/[.\-]/g, ""))}
+                            onInvalid={(e) => e.target.setCustomValidity("Digite um CPF válido no formato 000.000.000-00")}
+                            onInput={(e) => e.target.setCustomValidity("")} />
 
                     </DataInput>
                     <BookSeats type="submit" to='/finalizado'>Reservar assento(s)</BookSeats>
@@ -117,10 +131,16 @@ const DataInput = styled.div`
         color: #FFFFFF;
         margin-bottom: 4px;
     }
-    input{
-        margin-bottom: 16px;
-        height: 40px;
-        border-radius: 8px;
+`
+
+const Input = styled.input`
+    margin-bottom: 16px;
+    height: 40px;
+    border-radius: 8px;
+    &::placeholder{
+        font-family: 'Roboto';
+        font-style: italic;
+        padding-left: 4px;
     }
 `
 

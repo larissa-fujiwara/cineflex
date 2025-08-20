@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 
-export default function FilmBanner({poster, title, filmId}){
+export default function FilmBanner({poster, title, filmId, setFilmName}){
     return (
         <Banner to={`/horarios/${filmId}/${title}`}>
-            <img onClick={() => console.log(title)} src={poster} alt={title} />
+            <img onClick={() => setFilmName(title)} src={poster} alt={title} />
         </Banner>
     )
 }

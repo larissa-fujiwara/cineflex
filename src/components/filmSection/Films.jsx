@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios'
 import loading from '../../assets/load.png';
 
-export default function Films() {
+export default function Films({filmName, setFilmName}) {
 
     const [filmList, setFilmList] = useState(null);
 
@@ -33,7 +33,7 @@ export default function Films() {
                     Em Cartaz
                 </Label>
                 <Wrapper>
-                    {filmList.map(({ id, title, posterURL }) => <FilmBanner key={id} title={title} poster={posterURL} filmId={id} />)}
+                    {filmList.map(({ id, title, posterURL }) => <FilmBanner key={id} title={title} poster={posterURL} filmId={id} setFilmName={setFilmName} />)}
                 </Wrapper>
 
             </Details>
