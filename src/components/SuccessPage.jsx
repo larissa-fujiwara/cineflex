@@ -1,7 +1,16 @@
 import styled from "styled-components"
 import { Content, Label, Details } from "../sharedStyles/sharedStyle"
+import { Link } from "react-router-dom"
 
-export default function SuccessPage({ filmName, showtime, bookInfo }) {
+export default function SuccessPage({ filmName, showtime, buyerData, seatsInfo, setFilmName, setShowtime, setBuyerData, setSeatsInfo}) {
+    
+    function limpaEstados(){
+        setFilmName('');
+        setShowtime({});
+        setBuyerData({});
+        setSeatsInfo([]);
+    }
+    
     return (
         <Content>
             <Details>
@@ -19,17 +28,19 @@ export default function SuccessPage({ filmName, showtime, bookInfo }) {
                     <BookDetails>
                         <h3>Ingressos</h3>
                         <hr />
-                        <p>assentos</p>
+                        <ul>
+                            {seatsInfo.map(seat => <li key={seat}>Assento {seat}</li>)}
+                        </ul>
                     </BookDetails>
 
                     <BookDetails>
                         <h3>Comprador</h3>
                         <hr />
-                        <p>Nome</p>
-                        <p>CPF</p>
+                        <p>Nome: {buyerData.name}</p>
+                        <p>CPF: {buyerData.cpf}</p>
                     </BookDetails>
                 </TicketsInfo>
-                <button>AAA</button>
+                <HomePage onClick={limpaEstados} to='/' >Voltar para tela inicial</HomePage>
             </Details>
         </Content>
     )
@@ -56,5 +67,28 @@ const BookDetails = styled.div`
     }
     hr{
         border: 1px solid #4E5A65;
+        margin-bottom: 12px;
     }
+    ul{
+        font-size: 1.25rem;
+        color:#FFFFFF;
+    }
+    li{
+        margin-bottom: 16px;
+    }
+`
+
+const HomePage = styled(Link)`
+    text-decoration: none;
+    font-size: 1.12rem;
+    font-weight: bold;
+    width: 90%;
+    padding: 16px;
+    background-color: #EE897F;
+    color:#2B2D36;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
 `

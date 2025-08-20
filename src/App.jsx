@@ -11,11 +11,14 @@ export default function App() {
 
   const [filmName, setFilmName] = useState('');
   const [showtime, setShowtime] = useState({});
-  const [bookInfo, setBookInfo] = useState({});
+  const [buyerData, setBuyerData] = useState({});
+  const [seatsInfo, setSeatsInfo] = useState([]);
 
 
-  console.log(`Console.log no App': ${filmName}, ${showtime.date}, ${showtime.time}`);
-  console.log(`Console.log no App: ${bookInfo.name}`);
+  console.log('Nome Filme: ', filmName);
+  console.log('Data e hora: ', showtime);
+  console.log('Nome e CPF: ', buyerData);
+  console.log('Assentos: ', seatsInfo);
 
   return (
     <>
@@ -24,8 +27,18 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Films setFilmName={setFilmName}/>}/>
           <Route path="/horarios/:filmId/:filmTitle" element={<Showtimes setShowtime={setShowtime}/>}/>
-          <Route path="/assentos/:showtimeId/:weekday" element={<Seats setBookInfo={setBookInfo}/>}/>
-          <Route path="/finalizado" element={<SuccessPage filmName={filmName} showtime={showtime} bookInfo={bookInfo}/>}/>
+          <Route path="/assentos/:showtimeId/:weekday" element={<Seats setBuyerData={setBuyerData} setSeatsInfo={setSeatsInfo}/>}/>
+          <Route path="/finalizado" element={<SuccessPage 
+          filmName={filmName}
+          setFilmName={setFilmName}
+          showtime={showtime}
+          setShowtime={setShowtime}
+          buyerData={buyerData}
+          setBuyerData={setBuyerData}
+          seatsInfo={seatsInfo}
+          setSeatsInfo={setSeatsInfo}
+          />}
+          />
         </Routes>
       </BrowserRouter>
     </>

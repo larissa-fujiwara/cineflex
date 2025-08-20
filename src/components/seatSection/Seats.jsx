@@ -6,11 +6,12 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 import axios from 'axios'
 
-export default function Seats({ setBookInfo }) {
+export default function Seats({ setBuyerData, setSeatsInfo }) {
 
     const { showtimeId } = useParams();
     const [seatsList, setSeatsList] = useState(null);
     const [book, setBook] = useState([]);
+    const [seatLabel, setSeatLabel] = useState([]);
     const [name, setName] = useState('');
     const [cpf, setCpf] = useState('');
     const navigate = useNavigate();
@@ -47,7 +48,11 @@ export default function Seats({ setBookInfo }) {
                 .then(() => {navigate('/finalizado')} )
                 .catch((erro) => console.log(erro.response.data))
 
-            setBookInfo(bookData);
+            let newCpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+            console.log(newCpf);
+
+            setBuyerData({name, cpf:newCpf});
+            setSeatsInfo(seatLabel.sort((a,b) => a - b) );
         }
 
 
@@ -68,6 +73,8 @@ export default function Seats({ setBookInfo }) {
                             available={isAvailable}
                             book={book}
                             setBook={setBook}
+                            seatLabel={seatLabel}
+                            setSeatLabel={setSeatLabel}
                         />)}
                     </SeatContainer>
                 </SeatDisplay>
@@ -93,11 +100,11 @@ export default function Seats({ setBookInfo }) {
                             placeholder="Digite o CPF"
                             pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}"
                             onChange={e => setCpf(e.target.value.replace(/[.\-]/g, ""))}
-                            onInvalid={(e) => e.target.setCustomValidity("Digite um CPF válido no formato 000.000.000-00")}
+                            onInvalid={(e) => e.target.setCustomValidity("Digite um CPF válido!")}
                             onInput={(e) => e.target.setCustomValidity("")} />
 
                     </DataInput>
-                    <BookSeats type="submit" to='/finalizado'>Reservar assento(s)</BookSeats>
+                    <BookSeats type="submit">Reservar assento(s)</BookSeats>
                 </CustomerData>
 
             </Details>
@@ -160,6 +167,7 @@ const BookSeats = styled.button`
     margin-top: 4px;
     display: flex;
     height: 42px;
+    font-size: 1.12rem;
     font-weight: bold;
     border-radius: 8px;
     align-items: center;

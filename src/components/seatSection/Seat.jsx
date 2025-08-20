@@ -1,14 +1,19 @@
 import { useState } from "react";
 import styled from "styled-components"
 
-export default function Seat({ seatId, seat, available, book, setBook }) {
+export default function Seat({ seatId, seat, available, book, setBook, seatLabel, setSeatLabel }) {
 
-    function bookSeat(seatId){
-        if(book.includes(seatId)){
-            setBook(book.filter(seat => seat !== seatId));
+    function bookSeat(seatId, seat){
+        if(book.includes(seatId) && seatLabel.includes(seat)){
+            setBook(book.filter(book => book !== seatId));
+            setSeatLabel(seatLabel.filter(label => label !== seat));
+            
         }else{
             const newBook = [...book, seatId];
+            const newLabel = [...seatLabel, seat];
             setBook(newBook);
+            setSeatLabel(newLabel);
+
         }
     }
 
@@ -22,7 +27,7 @@ export default function Seat({ seatId, seat, available, book, setBook }) {
 
     return (
 
-        <Available $select={book.includes(seatId)} onClick={() => bookSeat(seatId)}>{seat}</Available>
+        <Available $select={book.includes(seatId)} onClick={() => bookSeat(seatId, seat)}>{seat}</Available>
     )
 }
 
