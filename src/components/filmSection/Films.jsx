@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios'
 import loading from '../../assets/load.png';
 
-export default function Films({filmName, setFilmName}) {
+export default function Films({setFilmName}) {
 
     const [filmList, setFilmList] = useState(null);
 

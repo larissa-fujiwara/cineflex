@@ -2,17 +2,18 @@ import styled from "styled-components"
 import { Content, Label, Details, Carregando } from "../../sharedStyles/sharedStyle.js"
 import Seat from "./Seat.jsx"
 import loading from "../../assets/load.png"
-import { Link, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 import axios from 'axios'
 
-export default function Seats() {
+export default function Seats({ setBookInfo }) {
 
     const { showtimeId } = useParams();
     const [seatsList, setSeatsList] = useState(null);
     const [book, setBook] = useState([]);
     const [name, setName] = useState('');
     const [cpf, setCpf] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${showtimeId}/seats`)
@@ -30,25 +31,28 @@ export default function Seats() {
         )
     }
 
-    function Teste(event) {
+    function submitForm(event) {
         event.preventDefault()
 
         if (book.length === 0) {
             alert("Selecione os assentos desejados!");
         } else {
-            const body = {
+            const bookData = {
                 ids: book,
                 name,
                 cpf
             }
 
-            console.log(body);
+            axios.post('https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many', bookData)
+                .then(() => {navigate('/finalizado')} )
+                .catch((erro) => console.log(erro.response.data))
 
-            return body;
+            setBookInfo(bookData);
         }
+
+
     }
 
-    console.log(book);
     return (
         <Content>
             <Details>
@@ -57,20 +61,28 @@ export default function Seats() {
                 </Label>
                 <SeatDisplay>
                     <SeatContainer>
-                        {seatsList.seats.map(({ id, name, isAvailable }) => <Seat key={id} seatId={id} seat={name} available={isAvailable} book={book} setBook={setBook} />)}
+                        {seatsList.seats.map(({ id, name, isAvailable }) => <Seat
+                            key={id}
+                            seatId={id}
+                            seat={name}
+                            available={isAvailable}
+                            book={book}
+                            setBook={setBook}
+                        />)}
                     </SeatContainer>
                 </SeatDisplay>
-                <CustomerData onSubmit={Teste}>
+                <CustomerData onSubmit={submitForm}>
                     <hr />
                     <DataInput>
 
                         <label htmlFor='nome'>Nome do comprador(a)</label>
-                        <Input 
-                        required 
-                        id='nome' 
-                        name='nome' 
-                        type="text"
-                        placeholder="Digite o nome completo" />
+                        <Input
+                            required
+                            id='nome'
+                            name='nome'
+                            type="text"
+                            placeholder="Digite o nome completo"
+                            onChange={e => setName(e.target.value)} />
 
                         <label htmlFor='cpf'>CPF do comprador(a)</label>
                         <Input

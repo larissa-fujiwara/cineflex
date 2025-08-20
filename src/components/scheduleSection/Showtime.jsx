@@ -2,14 +2,22 @@ import styled from "styled-components"
 import {Wrapper} from "../../sharedStyles/sharedStyle.js"
 import Time from "./Time.jsx"
 
-export default function Showtime({ weekday, date, showtimes }) {
+export default function Showtime({ weekday, date, showtimes, setShowtime }) {
   
+
   return (
         <ShowtimeBanner>
             <p>{`${weekday}, ${date}`}</p>
             <hr/>
             <Wrapper $horario = {true}>
-              {showtimes.map(({name,id}) => <Time  key={id} name={name} weekday={weekday} showtimeId={id}/>)}
+              {showtimes.map(({name,id}) => <Time 
+              key={id} 
+              time={name} 
+              date={date}
+              weekday={weekday} 
+              showtimeId={id} 
+              setShowtime={setShowtime}
+              />)}
             </Wrapper>
         </ShowtimeBanner>
     )

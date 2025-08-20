@@ -1,11 +1,13 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom"
+import { useState } from "react"
 
-export default function Time({name, showtimeId, weekday}){
-    
+
+export default function Time({time, showtimeId, date, weekday, setShowtime}){
+
     return (
-        <TimeLabel to={`/assentos/${showtimeId}/${weekday}`}>
-        <span>{name}</span>
+        <TimeLabel to={`/assentos/${showtimeId}/${weekday}`} onClick={() => setShowtime({date, time})}>
+        <span>{time}</span>
         </TimeLabel>
     )
 }

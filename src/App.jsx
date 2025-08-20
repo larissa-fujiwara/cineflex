@@ -10,9 +10,12 @@ import { useState } from "react";
 export default function App() {
 
   const [filmName, setFilmName] = useState('');
+  const [showtime, setShowtime] = useState({});
+  const [bookInfo, setBookInfo] = useState({});
 
-  console.log(filmName);
 
+  console.log(`Console.log no App': ${filmName}, ${showtime.date}, ${showtime.time}`);
+  console.log(`Console.log no App: ${bookInfo.name}`);
 
   return (
     <>
@@ -20,9 +23,9 @@ export default function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Films setFilmName={setFilmName}/>}/>
-          <Route path="/horarios/:filmId/:filmTitle" element={<Showtimes/>}/>
-          <Route path="/assentos/:showtimeId/:weekday" element={<Seats/>}/>
-          <Route path="/finalizado" element={<SuccessPage />}/>
+          <Route path="/horarios/:filmId/:filmTitle" element={<Showtimes setShowtime={setShowtime}/>}/>
+          <Route path="/assentos/:showtimeId/:weekday" element={<Seats setBookInfo={setBookInfo}/>}/>
+          <Route path="/finalizado" element={<SuccessPage filmName={filmName} showtime={showtime} bookInfo={bookInfo}/>}/>
         </Routes>
       </BrowserRouter>
     </>

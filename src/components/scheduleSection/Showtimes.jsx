@@ -5,7 +5,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import loading from '../../assets/load.png';
 
-export default function Showtimes() {
+export default function Showtimes({setShowtime}) {
     const { filmId } = useParams()
     const [showtimeList, setShowtimeList] = useState(null);
 
@@ -31,7 +31,13 @@ export default function Showtimes() {
                     Selecione o horário
                 </Label>
                 <Wrapper>
-                    {showtimeList.days.map(({ id, weekday, date, showtimes }) => <Showtime key={id} weekday={weekday} date={date} showtimes={showtimes} />)}
+                    {showtimeList.days.map(({ id, weekday, date, showtimes }) => <Showtime 
+                    key={id} 
+                    weekday={weekday} 
+                    date={date} 
+                    showtimes={showtimes} 
+                    setShowtime={setShowtime}
+                    />)}
                 </Wrapper>
             </Details>
         </Content>
