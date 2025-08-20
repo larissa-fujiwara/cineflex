@@ -7,5 +7,5 @@ Não foi obrigatório implemtar validações no CPF e Nome neste momento;
 
 ## Link da aplicação
 
-[ZapRecall](https://cineflex-dun.vercel.app/)
+[Cineflex](https://cineflex-dun.vercel.app/)
 
