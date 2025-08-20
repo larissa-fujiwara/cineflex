@@ -14,12 +14,6 @@ export default function App() {
   const [buyerData, setBuyerData] = useState({});
   const [seatsInfo, setSeatsInfo] = useState([]);
 
-
-  console.log('Nome Filme: ', filmName);
-  console.log('Data e hora: ', showtime);
-  console.log('Nome e CPF: ', buyerData);
-  console.log('Assentos: ', seatsInfo);
-
   return (
     <>
       <BrowserRouter>
